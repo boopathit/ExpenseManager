@@ -2,18 +2,30 @@ package com.boopathi.expensemanager;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private EditText _eMailText = (EditText) findViewById(R.id.input_email);
+    private EditText _passwordText = (EditText) findViewById(R.id.input_passsword);
+    private Button _loginButton = (Button) findViewById(R.id.btn_login);
+    private TextView _forgotPasswordLink = (TextView) findViewById(R.id.link_forgot_pass);
+    private TextView _signUpLink = (TextView) findViewById(R.id.link_signup);
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+
+
     }
 
     @Override
