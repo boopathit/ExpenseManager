@@ -14,25 +14,32 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
-    private EditText _eMailText = (EditText) findViewById(R.id.input_email);
-    private EditText _passwordText = (EditText) findViewById(R.id.input_passsword);
-    private Button _loginButton = (Button) findViewById(R.id.btn_login);
-    private TextView _forgotPasswordLink = (TextView) findViewById(R.id.link_forgot_pass);
-    private TextView _signUpLink = (TextView) findViewById(R.id.link_signup);
+    private EditText _eMailText ;
+    private EditText _passwordText;
+    private Button _loginButton;
+    private TextView _forgotPasswordLink;
+    private TextView _signUpLink;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
+        _eMailText = (EditText) findViewById(R.id.input_email);
+        _passwordText = (EditText) findViewById(R.id.input_passsword);
+        _loginButton = (Button) findViewById(R.id.btn_login);
+        _forgotPasswordLink = (TextView) findViewById(R.id.link_forgot_password);
+        _signUpLink = (TextView) findViewById(R.id.link_signup);
+
+
         _loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         _loginButton.setEnabled(false);
-        final ProgressDialog loginProgressDialog = new ProgressDialog(MainActivity.this,R.style.AppTheme_Dark_Dialog);
+        final ProgressDialog loginProgressDialog = new ProgressDialog(LoginActivity.this,R.style.AppTheme_Dark_Dialog);
         loginProgressDialog.setIndeterminate(true);
         loginProgressDialog.setMessage("Authenticating Login");
         loginProgressDialog.show();
