@@ -190,7 +190,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //    getting all the transaction
     public List<Category> getAllCategories(){
-        List<Category> category =  new ArrayList<>();
+        List<Category> categoryArrayList =  new ArrayList<>();
         String selectAllQuery = "SELECT * FROM " + TABLE_CATEGORY;
         Log.d(TAG,"Select All Query : " + selectAllQuery);
 
@@ -204,11 +204,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 ct.setId(c.getInt(c.getColumnIndex(KEY_ID)));
                 ct.setCat_name(c.getString(c.getColumnIndex(KEY_NAME)));
                 ct.setMode(c.getString(c.getColumnIndex(KEY_MODE)));
-                category.add(ct);
+                categoryArrayList.add(ct);
 
             }while(c.moveToNext());
         }
-        return category;
+        return categoryArrayList;
     }
 
 //    Update Transaction

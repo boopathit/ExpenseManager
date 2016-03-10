@@ -1,4 +1,4 @@
-package com.boopathi.expensemanager;
+package com.boopathi.expensemanager.db;
 
 /**
  * Created by Boopathi on 3/9/2016.
