@@ -1,7 +1,9 @@
 package com.boopathi.expensemanager;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -24,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button _loginButton;
     private TextView _forgotPasswordLink;
     private TextView _signUpLink;
+    private SessionManagement session;
+    private Context _context;
 
 
 
@@ -31,6 +35,19 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        session = new SessionManagement(getApplicationContext());
+        if(session.isLoggedIn() == true){
+            // user is not logged in redirect him to Login Activity
+            Intent i = new Intent(getApplicationContext(), SummaryActivity.class);
+            // Closing all the Activities
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            // Add new Flag to start new Activity
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            // Staring Login Activity
+            startActivity(i);
+        }
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
         _eMailText = (EditText) findViewById(R.id.input_email);
@@ -79,10 +96,15 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void run() {
-                        if (email == "booptheboss007@gmail.com" && password == "Pappu12345")
-                        onLoginSuccess();
-                        else
-                        onLoginFailed();
+
+                        if (email.equals("booptheboss007@gmail.com") && password.equals("Pappu12345")) {
+                            onLoginSuccess();
+                        }
+                        else{
+                            Log.e(TAG,email+"----"+password);
+                            onLoginFailed();
+                        }
+
                         loginProgressDialog.dismiss();
                     }
                 }, 3000);
@@ -115,17 +137,18 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void onLoginSuccess() {
+        // Creating user login session
+        session.createLoginSession("ExpenseManager", _eMailText.getText().toString());
         _loginButton.setEnabled(true);
-        finish();
+        Intent intent = new Intent(getApplicationContext(),SummaryActivity.class);
+        startActivity(intent);
     }
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == REQUEST_SIGNUP){
             if(resultCode == RESULT_OK) {
-
 //                Implementing Sign up Logic Here
-
                 this.finish();
             }
         }

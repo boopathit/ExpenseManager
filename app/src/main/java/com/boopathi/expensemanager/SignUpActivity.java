@@ -1,6 +1,9 @@
 package com.boopathi.expensemanager;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,12 +18,12 @@ import android.widget.Toast;
 public class SignUpActivity extends AppCompatActivity {
 
     private static final String TAG="SignUpActivity";
-
-    EditText _nameText;
-    EditText _passwordText;
-    EditText _emailText;
-    Button _signUpButton;
-    TextView _loginLink;
+    private EditText _nameText;
+    private EditText _passwordText;
+    private EditText _emailText;
+    private Button _signUpButton;
+    private TextView _loginLink;
+    private SessionManagement session;
 
 
     @Override
@@ -30,6 +33,21 @@ public class SignUpActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if(actionBar!=null)
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        session = new SessionManagement(getApplicationContext());
+        session.checkLogin();
+        if(session.isLoggedIn() == true){
+            // user is not logged in redirect him to Login Activity
+            Intent i = new Intent(getApplicationContext(), SummaryActivity.class);
+            // Closing all the Activities
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            // Add new Flag to start new Activity
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            // Staring Login Activity
+            startActivity(i);
+        }
 
         _nameText = (EditText) findViewById(R.id.input_name);
         _passwordText = (EditText) findViewById(R.id.input_passsword);

@@ -3,7 +3,25 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="title_activity_summary">SummaryActivity</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_search">Search</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    <string name="nav_item_summary">Home</string>
+    <string name="nav_item_spent">Friends</string>
+    <string name="nav_item_income">Income</string>
+
+    <!-- navigation drawer item labels  -->
+    <string-array name="nav_drawer_labels">
+        <item>@string/nav_item_summary</item>
+        <item>@string/nav_item_spent</item>
+        <item>@string/nav_item_income</item>
+    </string-array>
+
+    <string name="title_summary">Summary</string>
+    <string name="title_Spent">Spent</string>
+    <string name="title_Income">Income</string>
+
+
 </resources>
