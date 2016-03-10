@@ -71,16 +71,18 @@ public class LoginActivity extends AppCompatActivity {
         loginProgressDialog.setIndeterminate(true);
         loginProgressDialog.setMessage("Authenticating Login");
         loginProgressDialog.show();
-        String email = _eMailText.getText().toString();
-        String password = _passwordText.getText().toString();
+        final String email = _eMailText.getText().toString();
+        final String password = _passwordText.getText().toString();
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
 
                     @Override
                     public void run() {
+                        if (email == "booptheboss007@gmail.com" && password == "Pappu12345")
                         onLoginSuccess();
-//                        onLoginFailed()
+                        else
+                        onLoginFailed();
                         loginProgressDialog.dismiss();
                     }
                 }, 3000);

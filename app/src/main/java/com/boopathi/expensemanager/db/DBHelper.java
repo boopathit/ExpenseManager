@@ -168,7 +168,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    //    fetching from the trans table
+    //    fetching from the Category table
     public Category getCategory(long category_id){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -188,7 +188,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return category;
     }
 
-    //    getting all the transaction
+    //    getting all the Categories
     public List<Category> getAllCategories(){
         List<Category> categoryArrayList =  new ArrayList<>();
         String selectAllQuery = "SELECT * FROM " + TABLE_CATEGORY;
@@ -229,7 +229,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-//    Update Cat4egory
+//    Update Category
 
     public int updateCategory(Category category){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -242,6 +242,17 @@ public class DBHelper extends SQLiteOpenHelper {
         return  db.update(TABLE_CATEGORY,values,KEY_ID + " = ?",new String [] {String.valueOf(category.getId())});
     }
 
+//    deleting a record in the Trans Table
+    public void deleteTrans(long trans_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_TRANS, KEY_ID + " = ? ", new String[] { String.valueOf(trans_id) } );
+    }
+
+//    deleting a Category in Category Table
+    public void deleteCategory(long category_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_CATEGORY,KEY_ID +" = ? ",new String[] { String.valueOf(category_id)});
+    }
 }
 
 
