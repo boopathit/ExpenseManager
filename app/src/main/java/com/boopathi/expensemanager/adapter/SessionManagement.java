@@ -1,8 +1,10 @@
-package com.boopathi.expensemanager;
+package com.boopathi.expensemanager.adapter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
+import com.boopathi.expensemanager.activity.LoginActivity;
 
 import java.util.HashMap;
 

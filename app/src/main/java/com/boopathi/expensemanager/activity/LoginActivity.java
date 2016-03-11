@@ -1,9 +1,8 @@
-package com.boopathi.expensemanager;
+package com.boopathi.expensemanager.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,6 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.boopathi.expensemanager.R;
+import com.boopathi.expensemanager.adapter.SessionManagement;
 
 public class LoginActivity extends AppCompatActivity {
 

@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.boopathi.expensemanager.model.Category;
+import com.boopathi.expensemanager.model.Trans;
+
 import java.util.ArrayList;
 import java.util.List;
 

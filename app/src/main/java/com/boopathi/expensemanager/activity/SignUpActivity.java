@@ -1,9 +1,7 @@
-package com.boopathi.expensemanager;
+package com.boopathi.expensemanager.activity;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.boopathi.expensemanager.R;
+import com.boopathi.expensemanager.adapter.SessionManagement;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -35,7 +36,6 @@ public class SignUpActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         session = new SessionManagement(getApplicationContext());
-        session.checkLogin();
         if(session.isLoggedIn() == true){
             // user is not logged in redirect him to Login Activity
             Intent i = new Intent(getApplicationContext(), SummaryActivity.class);

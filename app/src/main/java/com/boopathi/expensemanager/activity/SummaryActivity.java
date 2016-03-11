@@ -1,10 +1,6 @@
-package com.boopathi.expensemanager;
+package com.boopathi.expensemanager.activity;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -12,9 +8,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.boopathi.expensemanager.R;
+import com.boopathi.expensemanager.adapter.SessionManagement;
+
+
 public class SummaryActivity extends AppCompatActivity {
     private Button logoutButton;
     private SessionManagement session;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,12 @@ public class SummaryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_summary);
         session = new SessionManagement(getApplicationContext());
         session.checkLogin();
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         logoutButton = (Button) findViewById(R.id.btn_logout);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
