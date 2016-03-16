@@ -1,45 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".activity.SummaryActivity">
+    tools:context="com.boopathi.expensemanager.activity.SummaryActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:id="@+id/appbar"
-        android:fitsSystemWindows="true">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-    <include
-        android:id="@+id/summary_toolbar"
-        layout="@layout/toolbar" />
+       <include
+           layout="@layout/toolbar"/>
 
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
-        android:id="@+id/main_fragment"
-        android:layout_width="match_parent"
+    <include layout="@layout/content_summary" />
+
+    <fragment
+        android:id="@+id/fragment_navigation_drawer"
+        android:name="com.boopathi.expensemanager.activity.FragmentDrawer"
+        android:layout_width="@dimen/nav_drawer_width"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_gravity="start"
+        app:layout="@layout/fragment_navigation_drawer"
+        tools:layout="@layout/fragment_navigation_drawer" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_dialog_email" />
 
 
-        <include layout="@layout/content_summary" />
-        <fragment
-            android:id="@+id/fragment_navigation_drawer"
-            android:name="com.boopathi.expensemanager.activity.FragmentDrawer"
-            android:layout_width="@dimen/nav_drawer_width"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            tools:layout="@layout/fragment_navigation_drawer" />
-
-        <!-- Add you content here -->
-
-    </FrameLayout>
-
-
-
-</android.support.design.widget.CoordinatorLayout>
+</android.support.v4.widget.DrawerLayout>

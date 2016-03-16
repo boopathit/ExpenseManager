@@ -1,56 +1,37 @@
 package com.boopathi.expensemanager.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import com.boopathi.expensemanager.R;
-import com.boopathi.expensemanager.adapter.SessionManagement;
-
 
 public class SummaryActivity extends AppCompatActivity {
-    private Button logoutButton;
-    private SessionManagement session;
-    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary);
-        session = new SessionManagement(getApplicationContext());
-        session.checkLogin();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        setSupportActionBar(mToolbar);
-        // Get the ActionBar here to configure the way it behaves.
-        final ActionBar ab = getSupportActionBar();
-        //ab.setHomeAsUpIndicator(R.drawable.ic_menu); // set a custom icon for the default home button
-        ab.setDisplayShowHomeEnabled(true); // show or hide the default home button
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
-        ab.setDisplayShowTitleEnabled(false); // disable the default title element here (for centered title)
-
-        logoutButton = (Button) findViewById(R.id.btn_logout);
-        logoutButton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                session.logoutUser();
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
     }
 
-
-
-    @Override
-    public void onBackPressed() {
-        moveTaskToBack(true);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -73,5 +54,4 @@ public class SummaryActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }
