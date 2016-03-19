@@ -8,8 +8,8 @@
     <string name="action_search">Search</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
-    <string name="nav_item_summary">Home</string>
-    <string name="nav_item_spent">Friends</string>
+    <string name="nav_item_summary">Summary</string>
+    <string name="nav_item_spent">Spent</string>
     <string name="nav_item_income">Income</string>
 
     <!-- navigation drawer item labels  -->

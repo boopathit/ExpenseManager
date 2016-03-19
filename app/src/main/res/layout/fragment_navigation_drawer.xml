@@ -11,20 +11,24 @@
         android:layout_alignParentTop="true"
         android:background="@color/colorPrimary">
         <ImageButton
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@drawable/ic_profile"
             android:scaleType="fitCenter"
             android:layout_centerInParent="true"
+            android:background="@null"
             />
     </RelativeLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/drawerList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/navigation_header_container"
-        android:layout_marginTop="15dp"
-        />
+
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/drawerList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/navigation_header_container"
+            />
+
 
 
 </RelativeLayout>
