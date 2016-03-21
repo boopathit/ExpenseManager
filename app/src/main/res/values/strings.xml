@@ -8,9 +8,12 @@
     <string name="action_search">Search</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+
+
     <string name="nav_item_summary">Summary</string>
     <string name="nav_item_spent">Spent</string>
     <string name="nav_item_income">Income</string>
+
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
@@ -18,6 +21,7 @@
         <item>@string/nav_item_spent</item>
         <item>@string/nav_item_income</item>
     </string-array>
+
 
     <string name="title_summary">Summary</string>
     <string name="title_Spent">Spent</string>

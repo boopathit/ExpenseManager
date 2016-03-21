@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.boopathi.expensemanager.R;
@@ -18,13 +19,15 @@ import java.util.List;
  */
 public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDrawerAdapter.MyViewHolder> {
     List<NavDrawerItem> data = Collections.emptyList();
+    List<NavDrawerItem> iconData = Collections.emptyList();
     private LayoutInflater inflater;
     private Context context;
 
-    public NavigationDrawerAdapter(Context context, List<NavDrawerItem> data) {
+    public NavigationDrawerAdapter(Context context, List<NavDrawerItem> data,List<NavDrawerItem> iconData) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.data = data;
+        this.iconData = iconData;
     }
 
     public void delete(int position) {
@@ -43,6 +46,7 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
     public void onBindViewHolder(MyViewHolder holder, int position) {
         NavDrawerItem current = data.get(position);
         holder.title.setText(current.getTitle());
+        holder.titleIcon.setImageResource(current.getTitleIcon());
     }
 
     @Override
@@ -52,10 +56,12 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView title;
+        ImageView titleIcon;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
+            titleIcon =(ImageView) itemView.findViewById(R.id.rowIcon);
         }
     }
 }

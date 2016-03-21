@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <integer name="nav_item_summary_icon" tools:ignore="ReferenceType">@android:drawable/ic_menu_agenda</integer>
+    <integer name="nav_item_spent_icon" tools:ignore="ReferenceType">@android:drawable/ic_menu_agenda</integer>
+    <integer name="nav_item_income_icon" tools:ignore="ReferenceType">@android:drawable/ic_menu_agenda</integer>
+
+
+    <!-- navigation drawer item labels  -->
+    <integer-array name="nav_drawer_labels_icons">
+        <item>@integer/nav_item_summary_icon</item>
+        <item>@integer/nav_item_spent_icon</item>
+        <item>@integer/nav_item_income_icon</item>
+    </integer-array>
+
+</resources>
