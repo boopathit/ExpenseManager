@@ -34,7 +34,6 @@ public class FragmentDrawer extends Fragment {
     private NavigationDrawerAdapter adapter;
     private View containerView;
     private static String[] titles = null;
-    private static int[] titlesIcon = null;
     private FragmentDrawerListener drawerListener;
 
     public FragmentDrawer() {
@@ -56,25 +55,12 @@ public class FragmentDrawer extends Fragment {
         return data;
     }
 
-    public static List<NavDrawerItem> getIconData(){
-        List<NavDrawerItem> iconData = new ArrayList<>();
-
-        for(int i=0;i<titlesIcon.length;i++){
-            NavDrawerItem navItem = new NavDrawerItem();
-            navItem.setTitleIcon(titlesIcon[i]);
-            iconData.add(navItem);
-        }
-        return iconData;
-    }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         titles = getActivity().getResources().getStringArray(R.array.nav_drawer_labels);
-        titlesIcon = getActivity().getResources().getIntArray(R.array.nav_drawer_labels_icons);
     }
 
     @Override
@@ -84,7 +70,7 @@ public class FragmentDrawer extends Fragment {
 
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer,container,false);
         recyclerView =(RecyclerView) layout.findViewById(R.id.drawerList);
-        adapter = new NavigationDrawerAdapter(getActivity(),getData(),getIconData());
+        adapter = new NavigationDrawerAdapter(getActivity(),getData());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {

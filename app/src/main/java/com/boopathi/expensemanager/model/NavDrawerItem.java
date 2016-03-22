@@ -6,15 +6,6 @@ package com.boopathi.expensemanager.model;
 public class NavDrawerItem {
     private boolean showNotify;
     private String title;
-    private int titleIcon;
-
-    public int getTitleIcon() {
-        return titleIcon;
-    }
-
-    public void setTitleIcon(int titleIcon) {
-        this.titleIcon = titleIcon;
-    }
 
     public NavDrawerItem() {
     }

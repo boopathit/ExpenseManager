@@ -12,6 +12,7 @@ android:orientation="horizontal">
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/rowIcon"
+    android:paddingTop="12dp"
     android:paddingLeft="16dp"
     android:src="@drawable/ic_menu_manage"/>
 
@@ -19,9 +20,9 @@ android:orientation="horizontal">
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:paddingLeft="12dp"
-    android:paddingTop="4dp"
+    android:paddingTop="12dp"
     android:textAppearance="?android:attr/textAppearanceMedium"
     android:text="Medium Text"
-    android:id="@+id/title" />
+    android:id="@+id/rowText" />
 
 </LinearLayout>
