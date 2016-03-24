@@ -3,6 +3,7 @@ package com.boopathi.expensemanager.activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -64,6 +65,8 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
             }
         });
 
+        openFragment(new FragmentSummary());
+
         mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView); // Assigning the RecyclerView Object to the xml View
 
         mRecyclerView.setHasFixedSize(true);                            // Letting the system know that the list objects are of fixed size
@@ -92,6 +95,7 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
 
                 if (child != null && mGestureDetector.onTouchEvent(motionEvent)) {
                     Drawer.closeDrawers();
+                    onTouchDrawer(recyclerView.getChildPosition(child));
                     Toast.makeText(SummaryActivity.this, "The Item Clicked is: " + recyclerView.getChildPosition(child), Toast.LENGTH_SHORT).show();
 
                     return true;
@@ -169,5 +173,30 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
     @Override
     public void onDrawerItemSelected(View view, int position) {
 
+    }
+
+    private void openFragment(final Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container_body, fragment)
+                .commit();
+    }
+
+    public void onTouchDrawer(final int position) {
+        if (position>=4) return;
+
+        switch (position) {
+            case 1:
+                openFragment(new FragmentSummary());
+                break;
+            case 2:
+                openFragment(new FragmentSpent());
+                break;
+            case 3:
+                openFragment(new FragmentIncome());
+                break;
+            default:
+                return;
+        }
     }
 }

@@ -2,19 +2,21 @@ package com.boopathi.expensemanager.activity;
 
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.boopathi.expensemanager.R;
+import com.boopathi.expensemanager.db.DBHelper;
 
 /**
  * Created by Boopathi on 22-03-2016.
  */
 public class FragmentSummary extends Fragment {
 
+    private DBHelper dbHelper;
 
     public FragmentSummary() {
         // Required empty public constructor
@@ -23,6 +25,9 @@ public class FragmentSummary extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        dbHelper = new DBHelper(getContext());
+
 
     }
 
