@@ -28,7 +28,7 @@
             android:textIsSelectable="false" />
 
         <TextView
-            android:id="@+id/incomeAmt"
+            android:id="@+id/spentAmt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Rs 0"
@@ -37,12 +37,12 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
         <TextView
-            android:id="@+id/incomeCat"
+            android:id="@+id/spentCat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Category"
             android:textSize="16sp"
-            android:layout_below="@+id/incomeAmt"
+            android:layout_below="@+id/spentAmt"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>
