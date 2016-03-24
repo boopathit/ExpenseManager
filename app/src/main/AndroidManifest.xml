@@ -27,8 +27,16 @@
         </activity>
         <activity
             android:name=".activity.SummaryActivity"
-            android:label="@string/title_activity_summary"
-            ></activity>
+            android:label="@string/title_activity_summary" />
+        <activity
+            android:name=".activity.TransactionActivity"
+            android:label="@string/title_activity_transaction"
+            android:parentActivityName=".activity.SummaryActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.boopathi.expensemanager.activity.SummaryActivity" />
+        </activity>
     </application>
 
 </manifest>

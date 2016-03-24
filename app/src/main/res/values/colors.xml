@@ -2,11 +2,11 @@
 <resources>
     <color name="colorPrimary">#FF9800</color>
     <color name="colorPrimaryDark">#F57C00</color>
-    <color name="colorAccent">#448AFF</color>
+    <color name="colorAccent">#b3b3b3</color>
     <color name="colorPrimaryLight">#FFE0B2</color>
     <color name="colorPrimaryText">#212121</color>
-    <color name="colorSecondaryText">#727272</color>
-    <color name="colorText">#212121</color>
+    <color name="colorSecondaryText">#dcdcdc</color>
+    <color name="colorText">#ffffff</color>
     <color name="colorDivider">#B6B6B6</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>

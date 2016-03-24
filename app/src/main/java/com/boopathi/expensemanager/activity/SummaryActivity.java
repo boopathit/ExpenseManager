@@ -1,5 +1,6 @@
 package com.boopathi.expensemanager.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -163,7 +164,9 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_add_trans) {
+            Intent intent = new Intent(getApplicationContext(),TransactionActivity.class);
+            startActivity(intent);
             return true;
         }
 
