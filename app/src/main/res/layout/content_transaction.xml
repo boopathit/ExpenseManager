@@ -15,25 +15,16 @@
         android:orientation="vertical"
         android:padding="20dp"
         android:background="@color/colorPrimary">
-        <LinearLayout
-            android:layout_width="200dp"
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:paddingRight="5dp"
             android:paddingBottom="5dp"
-            >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="5dp"
-                    android:textColor="@color/colorText"
-                    android:textSize="18sp"
-                    android:text="Cash Spend/Income"/>
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:src="@drawable/ic_edit"
-                    />
-            </LinearLayout>
+            android:textColor="@color/colorText"
+            android:textSize="18sp"
+            android:text="Cash Spent/Income"/>
+
         <LinearLayout
             android:layout_width="200dp"
             android:layout_height="wrap_content"
@@ -48,7 +39,7 @@
                 android:textSize="24sp"
                 android:text="@string/Rs"/>
             <EditText
-                android:id="@+id/amount"
+                android:id="@+id/editTextAmount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
@@ -81,34 +72,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Spend/Income"/>
-                    <FrameLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content">
 
-                        <EditText
-                            android:id="@+id/editTextMode"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="25dp"
-                            android:textColor="@color/colorPrimaryText"
-                            android:text="Spend"
-                            android:textColorHighlight="@color/colorSecondaryText"/>
-
-                        <Button
-                            android:id="@+id/calc_clear_txt_Prise"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginRight="5dp"
-                            android:layout_gravity="right|center_vertical"
-                            android:background="@drawable/ic_delete" />
-
-                    </FrameLayout>
-
-
+                    <EditText
+                        android:id="@+id/editTextMode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Spend"
+                        android:focusable="false"
+                        android:editable="false"
+                        android:drawableRight="@drawable/ic_arrow_drop_down"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -130,11 +107,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Merchant/Sender/Receiver"/>
+
                         <EditText
                             android:id="@+id/editTextTo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Paid To"/>
+                            android:hint="Paid To"
+                            android:drawableRight="@drawable/ic_delete"
+                            />
                     </LinearLayout>
             </LinearLayout>
 
@@ -156,11 +136,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Category"/>
+
                     <EditText
                         android:id="@+id/editTextCat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Select a Category"/>
+                        android:hint="Select a Category"
+                        android:editable="false"
+                        android:focusable="false"
+                        android:drawableRight="@drawable/ic_keyboard_arrow_right"
+                        />
                 </LinearLayout>
             </LinearLayout>
 
@@ -182,11 +167,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Date"/>
-                    <EditText
-                        android:id="@+id/editTextDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="25 Mar, 2016"/>
+
+
+                        <EditText
+                            android:id="@+id/editTextDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="25 Mar, 2016"
+                            android:editable="false"
+                            android:focusable="false"
+                            android:drawableRight="@drawable/ic_arrow_drop_down"
+                            />
+
                 </LinearLayout>
             </LinearLayout>
 

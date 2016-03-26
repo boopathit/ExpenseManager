@@ -1,12 +1,20 @@
 package com.boopathi.expensemanager.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.boopathi.expensemanager.R;
 import com.boopathi.expensemanager.db.DBHelper;
@@ -18,6 +26,14 @@ public class TransactionActivity extends AppCompatActivity {
     final CharSequence[] modes = { "Spend", "Income" };
 
     private Trans trans = new Trans();
+    private EditText editTextAmount;
+    private EditText editTextMode;
+    private EditText editTextTo;
+    private EditText editTextCat;
+    private EditText editTextDate;
+    private EditText editTextNotes;
+    private AlertDialog alert;
+    private AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,18 +46,61 @@ public class TransactionActivity extends AppCompatActivity {
 
         dbHelper = new DBHelper(getApplicationContext());
 
+        editTextAmount = (EditText) findViewById(R.id.editTextAmount);
+        editTextMode = (EditText) findViewById(R.id.editTextMode);
+        editTextTo = (EditText) findViewById(R.id.editTextTo);
+        editTextCat = (EditText) findViewById(R.id.editTextCat);
+        editTextDate = (EditText) findViewById(R.id.editTextDate);
+        editTextNotes = (EditText) findViewById(R.id.editTextNotes);
 
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder = new AlertDialog.Builder(this);
         builder.setTitle("Make your selection");
         builder.setItems(modes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 // Do something with the selection
             }
         });
-        AlertDialog alert = builder.create();
+        alert = builder.create();
         alert.show();
+
+        editTextMode.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                alert.show();
+                return true;
+            }
+        });
+        editTextTo.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_RIGHT = 2;
+                int actionX, actionY;
+                actionX = (int) event.getRawX();
+                actionY = (int) event.getRawY();
+                Drawable drawableBottom = editTextTo.getCompoundDrawables()[DRAWABLE_RIGHT];
+
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+
+                    if(event.getAction() == MotionEvent.ACTION_UP) {
+                        if(event.getRawX() >= (editTextTo.getRight() - editTextTo.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                            editTextTo.getText().clear();
+
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+        });
+        editTextTo.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+//                Intent intent = new Intent(getApplicationContext(),SelectCategoryActivity.class);
+//                startActivity(intent);
+                return true;
+            }
+        });
+
 
 
 
