@@ -85,12 +85,30 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Spend/Income"/>
-                    <EditText
-                        android:id="@+id/editTextMode"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Spend"
-                        android:textColorHighlight="@color/colorSecondaryText"/>
+                    <FrameLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/editTextMode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="25dp"
+                            android:textColor="@color/colorPrimaryText"
+                            android:text="Spend"
+                            android:textColorHighlight="@color/colorSecondaryText"/>
+
+                        <Button
+                            android:id="@+id/calc_clear_txt_Prise"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_gravity="right|center_vertical"
+                            android:background="@drawable/ic_delete" />
+
+                    </FrameLayout>
+
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -142,7 +160,7 @@
                         android:id="@+id/editTextCat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Select a CAtegory"/>
+                        android:hint="Select a Category"/>
                 </LinearLayout>
             </LinearLayout>
 
