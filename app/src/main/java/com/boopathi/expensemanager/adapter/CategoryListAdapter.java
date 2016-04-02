@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.boopathi.expensemanager.R;
-import com.boopathi.expensemanager.model.NavDrawerItem;
+import com.boopathi.expensemanager.model.Category;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,12 +16,12 @@ import java.util.List;
 /**
  * Created by Boopathi on 10-03-2016.
  */
-public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDrawerAdapter.MyViewHolder> {
-    List<NavDrawerItem> data = Collections.emptyList();
+public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.MyViewHolder> {
+    List<Category> data = Collections.emptyList();
     private LayoutInflater inflater;
     private Context context;
 
-    public NavigationDrawerAdapter(Context context, List<NavDrawerItem> data) {
+    public CategoryListAdapter(Context context, List<Category> data) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.data = data;
@@ -34,15 +34,15 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.nav_drawer_row, parent, false);
+        View view = inflater.inflate(R.layout.category_list_row, parent, false);
         MyViewHolder holder = new MyViewHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        NavDrawerItem current = data.get(position);
-        holder.title.setText(current.getTitle());
+        Category current = data.get(position);
+        holder.title.setText(current.getCat_name());
     }
 
     @Override
@@ -55,7 +55,7 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title);
+            title = (TextView) itemView.findViewById(R.id.categoryRow);
         }
     }
 }

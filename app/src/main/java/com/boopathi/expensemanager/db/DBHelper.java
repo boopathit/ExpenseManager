@@ -32,7 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_ID="id";
 
 //    Trans Table Columns Name
-    private static final String KEY_TYPE = "type";
+    private static final String KEY_TYPE = "mode";
     private static final String KEY_FROM="from";
     private static final String KEY_TO="to";
     private static final String KEY_CAT_ID="cat_id";
@@ -46,24 +46,24 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 //    Cretate Table Trans SStatement
-    private static final String CREATE_TABLE_CATEGORY = "CREATE TABLE"
+    private static final String CREATE_TABLE_TRANS = " CREATE TABLE "
         + TABLE_TRANS
-        + "( " + KEY_ID + "INTEGER PRIMARY KEY , "
-        + KEY_TYPE + "TEXT , "
-        + KEY_FROM + "TEXT , "
-        + KEY_TO + "TEXT , "
-        + KEY_CAT_ID + "INTEGER , "
-        + KEY_AMT + "INTEGER , "
-        + KEY_DATE + "DATETIME , "
-        + KEY_NOTE + "TEXT )";
+        + " ( " + KEY_ID + " INTEGER PRIMARY KEY , '"
+        + KEY_TYPE + "' TEXT , '"
+        + KEY_FROM + "' TEXT , '"
+        + KEY_TO + "' TEXT , "
+        + KEY_CAT_ID + " INTEGER , "
+        + KEY_AMT + " INTEGER , "
+        + KEY_DATE + " DATETIME , '"
+        + KEY_NOTE + "' TEXT );";
 
 
     //    Cretate Table Category Statement
-    private static final String CREATE_TABLE_TRANS = "CREATE TABLE"
+    private static final String CREATE_TABLE_CATEGORY = " CREATE TABLE "
             + TABLE_CATEGORY
-            + "( " + KEY_ID + "INTEGER PRIMARY KEY , "
-            + KEY_NAME + "TEXT,"
-            + KEY_MODE + "TEXT )";
+            + " ( " + KEY_ID + " INTEGER PRIMARY KEY , '"
+            + KEY_NAME + "' TEXT, '"
+            + KEY_MODE + "' TEXT );";
 
     public DBHelper(Context context) {
         super(context,DATABASE_NAME,null,DB_VERSION);
@@ -73,7 +73,39 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_TRANS);
         db.execSQL(CREATE_TABLE_CATEGORY);
-
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Breakfast','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Bus Fare','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Car','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Cigarettes','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Coffee','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Cookies','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Courier','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Daily Care','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Dinner','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Donation','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Drinks','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Electricity','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Entertainment','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Fast Food','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Fruits','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Gas','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Gifts','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Lunch','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Maintenance','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Mobile','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Pets','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Prepaid Wallet','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Rent/Mortgage','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Shopping','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Stationary','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Tax','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Transport','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Travel','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Water','Spend');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Gifts','Income');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Loan','Income');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Others','Income');");
+        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Salary','Income');");
     }
 
     @Override

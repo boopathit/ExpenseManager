@@ -11,10 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.boopathi.expensemanager.R;
 import com.boopathi.expensemanager.db.DBHelper;
@@ -57,7 +54,7 @@ public class TransactionActivity extends AppCompatActivity {
         builder.setTitle("Make your selection");
         builder.setItems(modes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
-                // Do something with the selection
+                editTextMode.setText(modes[item]);
             }
         });
         alert = builder.create();
@@ -82,7 +79,7 @@ public class TransactionActivity extends AppCompatActivity {
                 if(event.getAction() == MotionEvent.ACTION_UP) {
 
                     if(event.getAction() == MotionEvent.ACTION_UP) {
-                        if(event.getRawX() >= (editTextTo.getRight() - editTextTo.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        if(event.getRawX() >= (editTextTo.getRight() - editTextTo.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width()+150)) {
                             editTextTo.getText().clear();
 
                             return true;
@@ -92,11 +89,12 @@ public class TransactionActivity extends AppCompatActivity {
                 return false;
             }
         });
-        editTextTo.setOnTouchListener(new View.OnTouchListener() {
+        editTextCat.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-//                Intent intent = new Intent(getApplicationContext(),SelectCategoryActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(),SelectCategoryActivity.class);
+                intent.putExtra("mode",editTextTo.getText().toString());
+                startActivityForResult(intent,5252);
                 return true;
             }
         });

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.boopathi.expensemanager">
-
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -37,6 +37,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.boopathi.expensemanager.activity.SummaryActivity" />
         </activity>
+        <activity android:name=".activity.SelectCategoryActivity"></activity>
     </application>
 
 </manifest>
