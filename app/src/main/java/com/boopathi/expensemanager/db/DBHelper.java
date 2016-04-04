@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.nfc.Tag;
 import android.util.Log;
 
 import com.boopathi.expensemanager.model.Category;
@@ -37,7 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_TO="to";
     private static final String KEY_CAT_ID="cat_id";
     private static final String KEY_AMT="amt";
-    private static final String KEY_DATE="date";
+    private static final String KEY_DATE="ondate";
     private static final String KEY_NOTE="note";
 
 //    Category Table Column Names
@@ -48,20 +49,20 @@ public class DBHelper extends SQLiteOpenHelper {
 //    Cretate Table Trans SStatement
     private static final String CREATE_TABLE_TRANS = " CREATE TABLE "
         + TABLE_TRANS
-        + " ( " + KEY_ID + " INTEGER PRIMARY KEY , '"
-        + KEY_TYPE + "' TEXT , '"
+        + " ( '" + KEY_ID + "' INTEGER PRIMARY KEY AUTOINCREMENT, "
+        + KEY_TYPE + " INTEGER , '"
         + KEY_FROM + "' TEXT , '"
         + KEY_TO + "' TEXT , "
         + KEY_CAT_ID + " INTEGER , "
-        + KEY_AMT + " INTEGER , "
-        + KEY_DATE + " DATETIME , '"
+        + KEY_AMT + " INTEGER , '"
+        + KEY_DATE + "' DATETIME , '"
         + KEY_NOTE + "' TEXT );";
 
 
     //    Cretate Table Category Statement
     private static final String CREATE_TABLE_CATEGORY = " CREATE TABLE "
             + TABLE_CATEGORY
-            + " ( " + KEY_ID + " INTEGER PRIMARY KEY , '"
+            + " ( " + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, '"
             + KEY_NAME + "' TEXT, '"
             + KEY_MODE + "' TEXT );";
 
@@ -104,8 +105,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Water','Spend');");
         db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Gifts','Income');");
         db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Loan','Income');");
-        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Others','Income');");
-        db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Salary','Income');");
+        db.execSQL("Insert into " + TABLE_CATEGORY + " ( " + KEY_NAME + " , " + KEY_MODE + " ) values ('Others','Income');");
+        db.execSQL("Insert into " + TABLE_CATEGORY + " ( " + KEY_NAME + " , " + KEY_MODE + " ) values ('Salary','Income');");
     }
 
     @Override
@@ -116,20 +117,21 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 //    Adding a Transaction into Trans Table
-    public long insertTransaction(Trans trans,int type,String from,String to,int cat_id,int amt,String date,String note ){
+    public long insertTransaction(Trans trans){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_TYPE,trans.getType());
-        values.put(KEY_FROM,trans.getFrom());
-        values.put(KEY_TO,trans.getTo());
+        values.put("'"+KEY_FROM+"'",trans.getFrom());
+        values.put("'"+KEY_TO+"'",trans.getTo());
         values.put(KEY_CAT_ID,trans.getCat_id());
         values.put(KEY_AMT,trans.getAmt());
-        values.put(KEY_DATE,trans.getDate());
-        values.put(KEY_NOTE, trans.getNote());
+        values.put("'"+KEY_DATE+"'",trans.getDate());
+        values.put("'"+KEY_NOTE+"'",trans.getNote());
 
 //        inserting a new row into Trans Table
         long trans_row_id = db.insert(TABLE_TRANS,null,values);
+        Log.d(TAG, "Data Inserted with ID : " + trans_row_id);
 
         return trans_row_id;
     }
@@ -140,8 +142,8 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME,category.getCat_name());
-        values.put(KEY_MODE,category.getMode());
+        values.put("'"+KEY_NAME+"'",category.getCat_name());
+        values.put("'"+KEY_MODE+"'",category.getMode());
 
 //        inserting a new row into Trans Table
         long category_row_id = db.insert(TABLE_CATEGORY,null,values);
@@ -208,7 +210,28 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String selectQuery= "SELECT * FROM "    + TABLE_CATEGORY + " WHERE "
-                + KEY_ID  + " = " + category_id;
+                + KEY_ID  + " = '" + category_id + "';";
+        Log.d(TAG, "Select Query : " + selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if(c!= null){
+            c.moveToFirst();
+        }
+        Category category = new Category();
+        category.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+        category.setCat_name(c.getString(c.getColumnIndex(KEY_NAME)));
+        category.setMode(c.getString(c.getColumnIndex(KEY_MODE)));
+        return category;
+    }
+
+
+    //    fetching from the Category table
+    public Category getCategoryId(String catName){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selectQuery= "SELECT * FROM "    + TABLE_CATEGORY + " WHERE "
+                + KEY_NAME  + " = '" + catName + "';";
         Log.d(TAG, "Select Query : " + selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, null);
@@ -226,7 +249,7 @@ public class DBHelper extends SQLiteOpenHelper {
     //    getting all the Categories
     public List<Category> getAllCategories(){
         List<Category> categoryArrayList =  new ArrayList<>();
-        String selectAllQuery = "SELECT * FROM " + TABLE_CATEGORY;
+        String selectAllQuery = "SELECT * FROM " + TABLE_CATEGORY +";";
         Log.d(TAG,"Select All Query : " + selectAllQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -240,6 +263,25 @@ public class DBHelper extends SQLiteOpenHelper {
                 ct.setCat_name(c.getString(c.getColumnIndex(KEY_NAME)));
                 ct.setMode(c.getString(c.getColumnIndex(KEY_MODE)));
                 categoryArrayList.add(ct);
+
+            }while(c.moveToNext());
+        }
+        return categoryArrayList;
+    }
+
+    //    getting all the Categories for a particular mode
+    public ArrayList<String> getModeCategories(String mode){
+        ArrayList<String> categoryArrayList =  new ArrayList<>();
+        String selectAllQuery = "SELECT * FROM " + TABLE_CATEGORY +" WHERE " + KEY_MODE + " = '"+mode+"';";
+        Log.d(TAG,"Select All Query : " + selectAllQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectAllQuery,null);
+
+        if(c!=null){
+            c.moveToFirst();
+            do{
+                categoryArrayList.add(c.getString(c.getColumnIndex(KEY_NAME)));
 
             }while(c.moveToNext());
         }

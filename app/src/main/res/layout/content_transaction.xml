@@ -173,7 +173,6 @@
                             android:id="@+id/editTextDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="25 Mar, 2016"
                             android:editable="false"
                             android:focusable="false"
                             android:drawableRight="@drawable/ic_arrow_drop_down"

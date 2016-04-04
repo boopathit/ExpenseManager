@@ -37,7 +37,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.boopathi.expensemanager.activity.SummaryActivity" />
         </activity>
-        <activity android:name=".activity.SelectCategoryActivity"></activity>
     </application>
 
 </manifest>

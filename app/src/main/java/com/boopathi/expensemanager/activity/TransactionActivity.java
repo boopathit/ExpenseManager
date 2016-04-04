@@ -1,21 +1,29 @@
 package com.boopathi.expensemanager.activity;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.boopathi.expensemanager.R;
 import com.boopathi.expensemanager.db.DBHelper;
 import com.boopathi.expensemanager.model.Trans;
+
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class TransactionActivity extends AppCompatActivity {
 
@@ -29,8 +37,17 @@ public class TransactionActivity extends AppCompatActivity {
     private EditText editTextCat;
     private EditText editTextDate;
     private EditText editTextNotes;
-    private AlertDialog alert;
-    private AlertDialog.Builder builder;
+    private AlertDialog alertMode;
+    private AlertDialog alertCat;
+    private AlertDialog.Builder builderMode;
+    private AlertDialog.Builder builderCat;
+    private String[] modesArrayCat;
+
+    private DatePickerDialog editTextDateDialog;
+
+    private SimpleDateFormat dateFormatter;
+    private Date currDate;
+    private Calendar currCal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,20 +67,37 @@ public class TransactionActivity extends AppCompatActivity {
         editTextDate = (EditText) findViewById(R.id.editTextDate);
         editTextNotes = (EditText) findViewById(R.id.editTextNotes);
 
-        builder = new AlertDialog.Builder(this);
-        builder.setTitle("Make your selection");
-        builder.setItems(modes, new DialogInterface.OnClickListener() {
+        dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+
+        builderMode = new AlertDialog.Builder(this);
+        builderMode.setTitle("Make your selection");
+        builderMode.setItems(modes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 editTextMode.setText(modes[item]);
             }
         });
-        alert = builder.create();
-        alert.show();
+
+        alertMode = builderMode.create();
+        alertMode.show();
+        modesArrayCat= dbHelper.getModeCategories(editTextMode.getText().toString()).toArray(new String[0]);
+        builderCat = new AlertDialog.Builder(this);
+        builderCat.setTitle("Select Category");
+        builderCat.setItems(modesArrayCat, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                editTextCat.setText(modesArrayCat[item]);
+                alertCat.dismiss();
+            }
+        });
+        alertCat = builderCat.create();
+        Log.e("Transaction Activity", Arrays.deepToString(modesArrayCat));
+        setDateTimeField();
+        currDate=getDateTime();
+        editTextDate.setText(dateFormatter.format(currDate));
 
         editTextMode.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                alert.show();
+                alertMode.show();
                 return true;
             }
         });
@@ -92,19 +126,41 @@ public class TransactionActivity extends AppCompatActivity {
         editTextCat.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Intent intent = new Intent(getApplicationContext(),SelectCategoryActivity.class);
-                intent.putExtra("mode",editTextTo.getText().toString());
-                startActivityForResult(intent,5252);
+
+
+                alertCat.show();
+
                 return true;
             }
         });
+        editTextDate.setOnTouchListener(new View.OnTouchListener(){
 
-
-
-
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                editTextDateDialog.show();
+                return false;
+            }
+        });
     }
 
+    private void setDateTimeField() {
 
+
+        Calendar newCalendar = Calendar.getInstance();
+        editTextDateDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                editTextDate.setText(dateFormatter.format(newDate.getTime()));
+            }
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        currCal=Calendar.getInstance();
+        currCal.setTime(currDate);
+        currCal.add(Calendar.DATE,1);
+        editTextDateDialog.getDatePicker().setMaxDate(currCal.getTimeInMillis());
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -122,10 +178,50 @@ public class TransactionActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_add) {
 
+            if(validateAll()){
+                trans.setAmt(Integer.parseInt(editTextAmount.getText().toString()));
+                trans.setType(editTextMode.getText().toString().equals("Income") ? 1 : 0);
+                if(editTextMode.getText().toString().equals("Income")){
+                    trans.setFrom(editTextTo.getText().toString());
+                    trans.setTo(null);
+                } else{
+                    trans.setTo(editTextTo.getText().toString());
+                    trans.setFrom(null);
+                }
+                trans.setCat_id(dbHelper.getCategoryId(editTextCat.getText().toString()).getId());
+                trans.setDate(dateFormatter.format(currDate));
+                trans.setNote(editTextNotes.getText().toString());
+                dbHelper.insertTransaction(trans);
+                finish();
+
+            }
+
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean validateAll() {
+        if (editTextAmount.getText().toString().matches("")) {
+            editTextAmount.setError("Enter a Valid Amount");
+            return false;
+        }
+        if (editTextTo.getText().toString().matches("")) {
+            editTextAmount.setError("Enter Valid Sender/Receiver");
+            return false;
+        }
+        if (editTextCat.getText().toString().matches("")) {
+            editTextAmount.setError("Select a Category");
+            return false;
+        }
+        return true;
+    }
+
+    private Date getDateTime() {
+        Date date = new Date();
+        return date;
     }
 
 }
