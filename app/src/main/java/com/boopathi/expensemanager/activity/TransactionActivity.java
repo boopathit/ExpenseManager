@@ -90,8 +90,8 @@ public class TransactionActivity extends AppCompatActivity {
         });
         alertCat = builderCat.create();
         Log.e("Transaction Activity", Arrays.deepToString(modesArrayCat));
-        setDateTimeField();
         currDate=getDateTime();
+        setDateTimeField();
         editTextDate.setText(dateFormatter.format(currDate));
 
         editTextMode.setOnTouchListener(new View.OnTouchListener() {
@@ -141,11 +141,10 @@ public class TransactionActivity extends AppCompatActivity {
                 return false;
             }
         });
+        dbHelper.close();
     }
 
     private void setDateTimeField() {
-
-
         Calendar newCalendar = Calendar.getInstance();
         editTextDateDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
 
@@ -204,19 +203,21 @@ public class TransactionActivity extends AppCompatActivity {
     }
 
     private boolean validateAll() {
+        boolean stat;
         if (editTextAmount.getText().toString().matches("")) {
             editTextAmount.setError("Enter a Valid Amount");
-            return false;
-        }
+            stat=false;
+        }else {stat=true;}
         if (editTextTo.getText().toString().matches("")) {
-            editTextAmount.setError("Enter Valid Sender/Receiver");
-            return false;
-        }
+            editTextTo.setError("Enter Valid Sender/Receiver");
+            stat=false;
+        }else {stat=true;}
         if (editTextCat.getText().toString().matches("")) {
-            editTextAmount.setError("Select a Category");
-            return false;
-        }
-        return true;
+            editTextCat.setError("Select a Category");
+            stat=false;
+        }else {stat=true;}
+
+        return stat;
     }
 
     private Date getDateTime() {

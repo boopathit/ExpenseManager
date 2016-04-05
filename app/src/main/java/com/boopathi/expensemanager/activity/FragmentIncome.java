@@ -3,6 +3,7 @@ package com.boopathi.expensemanager.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.boopathi.expensemanager.R;
 public class FragmentIncome extends Fragment {
 
 
+    private Toolbar toolbar;
 
     public FragmentIncome() {
         // Required empty public constructor
@@ -23,6 +25,8 @@ public class FragmentIncome extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivity().setTitle("Income");
+
 
     }
 

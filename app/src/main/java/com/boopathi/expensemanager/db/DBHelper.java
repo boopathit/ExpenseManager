@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.nfc.Tag;
 import android.util.Log;
 
 import com.boopathi.expensemanager.model.Category;
@@ -127,7 +126,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(KEY_CAT_ID,trans.getCat_id());
         values.put(KEY_AMT,trans.getAmt());
         values.put("'"+KEY_DATE+"'",trans.getDate());
-        values.put("'"+KEY_NOTE+"'",trans.getNote());
+        values.put("'" + KEY_NOTE + "'", trans.getNote());
 
 //        inserting a new row into Trans Table
         long trans_row_id = db.insert(TABLE_TRANS,null,values);
@@ -202,6 +201,22 @@ public class DBHelper extends SQLiteOpenHelper {
            }while(c.moveToNext());
         }
         return trans;
+    }
+    public int getSummaryAmount() {
+        String selectAmtQuery = "select  (select sum("+KEY_AMT+") 'TotalIncome' from "+TABLE_TRANS+" where "+KEY_MODE+"=1) - (select sum("+KEY_AMT+") 'TotalIncome' from "+TABLE_TRANS+" where "+KEY_MODE+"=0)  'NetAmt';";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Log.d(TAG, "Select Query : " + selectAmtQuery);
+        int totAmt = 0;
+        Cursor c = db.rawQuery(selectAmtQuery, null);
+        if (c != null) {
+            c.moveToFirst();
+            do {
+                totAmt = c.getColumnIndex("NetAmt");
+            } while (c.moveToNext());
+
+        }
+        Log.d(TAG, "Net Amt : " + totAmt);
+        return totAmt;
     }
 
 

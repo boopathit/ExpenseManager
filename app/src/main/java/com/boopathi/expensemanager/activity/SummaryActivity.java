@@ -55,6 +55,7 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -66,7 +67,8 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
             }
         });
 
-        openFragment(new FragmentSummary());
+
+
 
         mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView); // Assigning the RecyclerView Object to the xml View
 
@@ -145,6 +147,7 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
         Drawer.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
         mDrawerToggle.syncState();               // Finally we set the drawer toggle sync State
 
+        openFragment(new FragmentSummary());
 
     }
 
