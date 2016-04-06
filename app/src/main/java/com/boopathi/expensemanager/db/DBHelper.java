@@ -11,6 +11,7 @@ import com.boopathi.expensemanager.model.Category;
 import com.boopathi.expensemanager.model.Trans;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -106,6 +107,40 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("Insert into "+TABLE_CATEGORY+" ( "+KEY_NAME+" , "+KEY_MODE+" ) values ('Loan','Income');");
         db.execSQL("Insert into " + TABLE_CATEGORY + " ( " + KEY_NAME + " , " + KEY_MODE + " ) values ('Others','Income');");
         db.execSQL("Insert into " + TABLE_CATEGORY + " ( " + KEY_NAME + " , " + KEY_MODE + " ) values ('Salary','Income');");
+        db.execSQL("Insert into "
+                + TABLE_TRANS+ " ( "
+                + KEY_TYPE + " , '"
+                + KEY_FROM + "' , '"
+                + KEY_TO + "' , "
+                + KEY_CAT_ID + " , "
+                + KEY_AMT + " , '"
+                + KEY_DATE + "' , '"
+                + KEY_NOTE + "' )" +
+                " values " +
+                "( '1'," +
+                "'AAbbcc'," +
+                "'null'," +
+                "4," +
+                "3000," +
+                "'2016-04-06 17:00:00'," +
+                "'nottes');");
+        db.execSQL("Insert into "
+                + TABLE_TRANS+ " ( "
+                + KEY_TYPE + " , '"
+                + KEY_FROM + "' , '"
+                + KEY_TO + "' , "
+                + KEY_CAT_ID + " , "
+                + KEY_AMT + " , '"
+                + KEY_DATE + "' , '"
+                + KEY_NOTE + "' )" +
+                " values " +
+                "( '0'," +
+                "'null'," +
+                "'ccBBcc'," +
+                "1," +
+                "200," +
+                "'2016-04-06 17:10:00'," +
+                "'nottes');");
     }
 
     @Override
@@ -203,19 +238,20 @@ public class DBHelper extends SQLiteOpenHelper {
         return trans;
     }
     public int getSummaryAmount() {
-        String selectAmtQuery = "SELECT (SUM("+KEY_AMT+")) AS NetAmt FROM "+TABLE_TRANS+" where "+KEY_MODE+"=1;";
+        String selectAmtQuery = " SELECT (SELECT SUM("+KEY_AMT+") FROM "+TABLE_TRANS+" where "+KEY_MODE+"=1) - (SELECT SUM("+KEY_AMT+") FROM "+TABLE_TRANS+" where "+KEY_MODE+"=0) ";
         SQLiteDatabase db = this.getReadableDatabase();
         Log.d(TAG, "Select Query : " + selectAmtQuery);
         int totAmt=0;
         Cursor c = db.rawQuery(selectAmtQuery, null);
+        Log.d(TAG, Arrays.toString(c.getColumnNames()));
         if (c != null) {
             c.moveToFirst();
             do {
-                totAmt = c.getColumnIndex("NetAmt");
+                totAmt = c.getInt(0);
             } while (c.moveToNext());
 
         }
-        Log.d(TAG, "Net Amt : " + totAmt);
+        Log.d(TAG, "NetAmt : " + totAmt);
         return totAmt;
     }
 

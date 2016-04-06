@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -169,7 +170,7 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_add_trans) {
             Intent intent = new Intent(getApplicationContext(),TransactionActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, 12345, null);
             return true;
         }
 
@@ -203,6 +204,21 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
                 break;
             default:
                 return;
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.d("AAAAAAAAAAAAAAAA", "onResult" + requestCode);
+        // check if the request code is same as what is passed  here it is 2
+        if(requestCode==12345)
+        {
+            Log.d("AAAAAAAAAAAAAAAA","onResult inside if"+requestCode);
+            View view =this.findViewById(android.R.id.content);
+            Snackbar.make(view, "Transaction Created", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
         }
     }
 }

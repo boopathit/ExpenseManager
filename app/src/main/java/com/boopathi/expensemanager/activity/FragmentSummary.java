@@ -32,7 +32,6 @@ public class FragmentSummary extends Fragment {
         super.onCreate(savedInstanceState);
 
         getActivity().setTitle("Summary");
-        dbHelper = new DBHelper(getContext());
 
 
     }
@@ -45,6 +44,7 @@ public class FragmentSummary extends Fragment {
 
         LinearLayout layout = (LinearLayout)inflater.inflate(R.layout.content_summary,container,false);
         amtText = (TextView) layout.findViewById(R.id.netBalAmt);
+        dbHelper = new DBHelper(this.getContext());
         netAmt= dbHelper.getSummaryAmount();
         amtText.setText(Integer.toString(netAmt));
         dbHelper.close();
@@ -62,4 +62,12 @@ public class FragmentSummary extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        dbHelper = new DBHelper(this.getContext());
+        netAmt= dbHelper.getSummaryAmount();
+        amtText.setText(Integer.toString(netAmt));
+        dbHelper.close();
+    }
 }
