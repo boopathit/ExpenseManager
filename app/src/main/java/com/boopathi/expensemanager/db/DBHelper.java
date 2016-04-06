@@ -203,10 +203,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return trans;
     }
     public int getSummaryAmount() {
-        String selectAmtQuery = "select  (select sum("+KEY_AMT+") 'TotalIncome' from "+TABLE_TRANS+" where "+KEY_MODE+"=1) - (select sum("+KEY_AMT+") 'TotalIncome' from "+TABLE_TRANS+" where "+KEY_MODE+"=0)  'NetAmt';";
+        String selectAmtQuery = "SELECT (SUM("+KEY_AMT+")) AS NetAmt FROM "+TABLE_TRANS+" where "+KEY_MODE+"=1;";
         SQLiteDatabase db = this.getReadableDatabase();
         Log.d(TAG, "Select Query : " + selectAmtQuery);
-        int totAmt = 0;
+        int totAmt=0;
         Cursor c = db.rawQuery(selectAmtQuery, null);
         if (c != null) {
             c.moveToFirst();

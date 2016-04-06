@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -20,7 +19,6 @@ import com.boopathi.expensemanager.db.DBHelper;
 import com.boopathi.expensemanager.model.Trans;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -74,25 +72,18 @@ public class TransactionActivity extends AppCompatActivity {
         builderMode.setItems(modes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 editTextMode.setText(modes[item]);
+                editTextCat.setText("");
+                buildAlerDialoCat();
+
             }
         });
-
         alertMode = builderMode.create();
         alertMode.show();
-        modesArrayCat= dbHelper.getModeCategories(editTextMode.getText().toString()).toArray(new String[0]);
-        builderCat = new AlertDialog.Builder(this);
-        builderCat.setTitle("Select Category");
-        builderCat.setItems(modesArrayCat, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                editTextCat.setText(modesArrayCat[item]);
-                alertCat.dismiss();
-            }
-        });
-        alertCat = builderCat.create();
-        Log.e("Transaction Activity", Arrays.deepToString(modesArrayCat));
+
         currDate=getDateTime();
         setDateTimeField();
         editTextDate.setText(dateFormatter.format(currDate));
+        buildAlerDialoCat();
 
         editTextMode.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -110,10 +101,10 @@ public class TransactionActivity extends AppCompatActivity {
                 actionY = (int) event.getRawY();
                 Drawable drawableBottom = editTextTo.getCompoundDrawables()[DRAWABLE_RIGHT];
 
-                if(event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
 
-                    if(event.getAction() == MotionEvent.ACTION_UP) {
-                        if(event.getRawX() >= (editTextTo.getRight() - editTextTo.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width()+150)) {
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        if (event.getRawX() >= (editTextTo.getRight() - editTextTo.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width() + 150)) {
                             editTextTo.getText().clear();
 
                             return true;
@@ -123,13 +114,12 @@ public class TransactionActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
         editTextCat.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
-
                 alertCat.show();
-
                 return true;
             }
         });
@@ -143,6 +133,19 @@ public class TransactionActivity extends AppCompatActivity {
         });
         dbHelper.close();
     }
+    private void buildAlerDialoCat(){
+        modesArrayCat= dbHelper.getModeCategories(editTextMode.getText().toString()).toArray(new String[0]);
+        builderCat = new AlertDialog.Builder(this);
+        builderCat.setTitle("Select Category");
+        builderCat.setItems(modesArrayCat, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                editTextCat.setText(modesArrayCat[item]);
+                alertCat.dismiss();
+            }
+        });
+        alertCat = builderCat.create();
+    }
+
 
     private void setDateTimeField() {
         Calendar newCalendar = Calendar.getInstance();
@@ -191,6 +194,7 @@ public class TransactionActivity extends AppCompatActivity {
                 trans.setDate(dateFormatter.format(currDate));
                 trans.setNote(editTextNotes.getText().toString());
                 dbHelper.insertTransaction(trans);
+                dbHelper.close();
                 finish();
 
             }
