@@ -118,9 +118,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 + KEY_NOTE + "' )" +
                 " values " +
                 "( '1'," +
-                "'AAbbcc'," +
+                "'Vagus Tech'," +
                 "'null'," +
-                "4," +
+                "33," +
                 "3000," +
                 "'2016-04-06 17:00:00'," +
                 "'nottes');");
@@ -136,7 +136,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 " values " +
                 "( '0'," +
                 "'null'," +
-                "'ccBBcc'," +
+                "'Katy'," +
                 "1," +
                 "200," +
                 "'2016-04-06 17:10:00'," +
@@ -176,8 +176,8 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put("'"+KEY_NAME+"'",category.getCat_name());
-        values.put("'"+KEY_MODE+"'",category.getMode());
+        values.put("'" + KEY_NAME + "'", category.getCat_name());
+        values.put("'" + KEY_MODE + "'", category.getMode());
 
 //        inserting a new row into Trans Table
         long category_row_id = db.insert(TABLE_CATEGORY,null,values);
@@ -193,7 +193,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                                 + KEY_ID  + " = " + trans_id;
         Log.d(TAG, "Select Query : " + selectQuery);
 
-        Cursor c = db.rawQuery(selectQuery,null);
+        Cursor c = db.rawQuery(selectQuery, null);
 
         if(c!= null){
             c.moveToFirst();
@@ -211,8 +211,8 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 //    getting all the transaction
-    public List<Trans> getAllTrans(){
-        List<Trans> trans =  new ArrayList<>();
+    public ArrayList<Trans> getAllTrans(){
+        ArrayList<Trans> trans =  new ArrayList<>();
         String selectAllQuery = "SELECT * FROM " + TABLE_TRANS;
         Log.d(TAG, "Select All Query : " + selectAllQuery);
 
@@ -237,6 +237,39 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return trans;
     }
+
+
+    //    getting all the mode transaction
+    public ArrayList<Trans> getModeTrans(int mode){
+        ArrayList<Trans> trans =  new ArrayList<>();
+        String selectAllQuery = "SELECT * FROM " + TABLE_TRANS+" WHERE "+KEY_TYPE+" = "+mode+" order by "+KEY_DATE+" DESC;";
+        Log.d(TAG, "Select All Query : " + selectAllQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectAllQuery, null);
+
+        if(c!=null){
+            c.moveToFirst();
+            do{
+                Trans tr=new Trans();
+                tr.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                tr.setType(c.getInt(c.getColumnIndex(KEY_TYPE)));
+                tr.setFrom(c.getString(c.getColumnIndex(KEY_FROM)));
+                tr.setTo(c.getString(c.getColumnIndex(KEY_TO)));
+                tr.setCat_id(c.getInt(c.getColumnIndex(KEY_CAT_ID)));
+                tr.setAmt(c.getInt(c.getColumnIndex(KEY_AMT)));
+                tr.setDate(c.getString(c.getColumnIndex(KEY_DATE)));
+                tr.setNote(c.getString(c.getColumnIndex(KEY_NOTE)));
+                trans.add(tr);
+
+            }while(c.moveToNext());
+        }
+        return trans;
+    }
+
+
+
+    //get net balance amount
     public int getSummaryAmount() {
         String selectAmtQuery = " SELECT (SELECT SUM("+KEY_AMT+") FROM "+TABLE_TRANS+" where "+KEY_MODE+"=1) - (SELECT SUM("+KEY_AMT+") FROM "+TABLE_TRANS+" where "+KEY_MODE+"=0) ";
         SQLiteDatabase db = this.getReadableDatabase();
@@ -257,7 +290,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     //    fetching from the Category table
-    public Category getCategory(long category_id){
+    public Category getCategory(int category_id){
         SQLiteDatabase db = this.getWritableDatabase();
 
         String selectQuery= "SELECT * FROM "    + TABLE_CATEGORY + " WHERE "

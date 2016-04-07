@@ -8,7 +8,7 @@
     android:layout_margin="5dp"
     >
 
-    <include layout="@layout/net_balance_card"
-        />
+    <include layout="@layout/net_balance_card" />
+
 
 </LinearLayout>

@@ -72,6 +72,11 @@ public class TransactionActivity extends AppCompatActivity {
         builderMode.setItems(modes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 editTextMode.setText(modes[item]);
+                if(modes[item].equals("Income")){
+                    editTextTo.setHint("Received From");
+                }else{
+                    editTextTo.setHint("Paid To");
+                }
                 editTextCat.setText("");
                 buildAlerDialoCat();
 
@@ -120,6 +125,7 @@ public class TransactionActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 alertCat.show();
+
                 return true;
             }
         });

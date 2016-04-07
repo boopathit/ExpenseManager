@@ -5,5 +5,10 @@
     android:orientation="horizontal"
     android:layout_margin="5dp">
 
-    <include layout="@layout/trans_income_card" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/transIncomeRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        />
 </LinearLayout>
