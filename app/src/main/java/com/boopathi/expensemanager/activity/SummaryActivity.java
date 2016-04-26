@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,8 +54,7 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
         setContentView(R.layout.activity_summary);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
+        if(getSupportActionBar() != null)
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -172,7 +170,12 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
             Intent intent = new Intent(getApplicationContext(),TransactionActivity.class);
             startActivityForResult(intent, 12345, null);
             return true;
+        } else if (id == R.id.action_add_cat) {
+            Intent intent = new Intent(getApplicationContext(),CategoryActivity.class);
+            startActivityForResult(intent, 12346, null);
+            return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -210,14 +213,16 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-
-        Log.d("AAAAAAAAAAAAAAAA", "onResult" + requestCode);
         // check if the request code is same as what is passed  here it is 2
         if(requestCode==12345)
         {
-            Log.d("AAAAAAAAAAAAAAAA","onResult inside if"+requestCode);
             View view =this.findViewById(android.R.id.content);
             Snackbar.make(view, "Transaction Created", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        } else if(requestCode==12346)
+        {
+            View view =this.findViewById(android.R.id.content);
+            Snackbar.make(view, "Category Created", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
     }

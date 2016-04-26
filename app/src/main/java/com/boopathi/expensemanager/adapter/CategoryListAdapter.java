@@ -6,56 +6,68 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.boopathi.expensemanager.R;
 import com.boopathi.expensemanager.model.Category;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by Boopathi on 10-03-2016.
  */
-public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.MyViewHolder> {
-    List<Category> data = Collections.emptyList();
-    private LayoutInflater inflater;
-    private Context context;
+public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.SimpleViewHolder> {
 
-    public CategoryListAdapter(Context context, List<Category> data) {
-        this.context = context;
-        inflater = LayoutInflater.from(context);
-        this.data = data;
+    private final Context mContext;
+    private ArrayList<Category> mData;
+
+    public void add(Category s,int position) {
+        position = position == -1 ? getItemCount()  : position;
+        mData.add(position,s);
+        notifyItemInserted(position);
     }
 
-    public void delete(int position) {
-        data.remove(position);
-        notifyItemRemoved(position);
+    public void remove(int position){
+        if (position < getItemCount()  ) {
+            mData.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
+    public static class SimpleViewHolder extends RecyclerView.ViewHolder {
+        public final TextView title;
+
+        public SimpleViewHolder(View view) {
+            super(view);
+            title = (TextView) view.findViewById(R.id.categoryRow);
+        }
+    }
+
+    public CategoryListAdapter(Context context, ArrayList<Category> data) {
+        mContext = context;
+        if (data != null)
+            mData = data;
+        else mData = new ArrayList<>();
+    }
+
+    public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        final View view = LayoutInflater.from(mContext).inflate(R.layout.category_list_row, parent, false);
+        return new SimpleViewHolder(view);
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.category_list_row, parent, false);
-        MyViewHolder holder = new MyViewHolder(view);
-        return holder;
-    }
-
-    @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        Category current = data.get(position);
-        holder.title.setText(current.getCat_name());
+    public void onBindViewHolder(SimpleViewHolder holder, final int position) {
+        holder.title.setText(mData.get(position).getCat_name());
+        holder.title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext,"Position ="+position,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
-    }
-
-    class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
-
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            title = (TextView) itemView.findViewById(R.id.categoryRow);
-        }
+        return mData.size();
     }
 }

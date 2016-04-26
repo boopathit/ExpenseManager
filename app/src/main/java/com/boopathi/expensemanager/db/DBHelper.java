@@ -12,7 +12,6 @@ import com.boopathi.expensemanager.model.Trans;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -172,12 +171,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     //    Adding a Category into Category Table
-    public long insertCategory(Category category,int cat_name,String mode){
+    public long insertCategory(String cat_name,String mode){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put("'" + KEY_NAME + "'", category.getCat_name());
-        values.put("'" + KEY_MODE + "'", category.getMode());
+        values.put("'" + KEY_NAME + "'", cat_name);
+        values.put("'" + KEY_MODE + "'", mode);
 
 //        inserting a new row into Trans Table
         long category_row_id = db.insert(TABLE_CATEGORY,null,values);
@@ -331,9 +330,9 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     //    getting all the Categories
-    public List<Category> getAllCategories(){
-        List<Category> categoryArrayList =  new ArrayList<>();
-        String selectAllQuery = "SELECT * FROM " + TABLE_CATEGORY +";";
+    public ArrayList<Category> getAllCategories(){
+        ArrayList<Category> categoryArrayList =  new ArrayList<>();
+        String selectAllQuery = "SELECT * FROM " + TABLE_CATEGORY +" order by "+KEY_MODE+";";
         Log.d(TAG,"Select All Query : " + selectAllQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();

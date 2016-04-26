@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:tag="cards main container">
 
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/spentCard"
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:padding="10dp">
 
             <TextView
-                android:id="@+id/spentText"
+                android:id="@+id/spentTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -30,11 +30,11 @@
                 android:textSize="28sp" />
 
             <TextView
+                android:id="@+id/spentDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/spentText"
-                android:layout_below="@+id/spentText"
-                android:text="from : "
+                android:layout_alignLeft="@+id/spentTo"
+                android:layout_below="@+id/spentTo"
                 android:textIsSelectable="false"
                 android:textSize="16sp" />
 
