@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import com.boopathi.expensemanager.R;
 import com.boopathi.expensemanager.adapter.NavigationDrawerAdapter;
 import com.boopathi.expensemanager.model.NavDrawerItem;
+import com.boopathi.expensemanager.model.PrefUtils;
+import com.boopathi.expensemanager.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,8 @@ public class FragmentDrawer extends Fragment {
     private View containerView;
     private static String[] titles = null;
     private FragmentDrawerListener drawerListener;
+    private User user;
+
 
     public FragmentDrawer() {
         // Required empty public constructor
@@ -85,6 +89,7 @@ public class FragmentDrawer extends Fragment {
 
             }
         }));
+        user= PrefUtils.getCurrentUser(getActivity());
 
         return layout;
     }
