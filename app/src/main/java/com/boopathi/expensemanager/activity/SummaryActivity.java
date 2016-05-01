@@ -21,21 +21,20 @@ import android.widget.Toast;
 import com.boopathi.expensemanager.R;
 import com.boopathi.expensemanager.adapter.MyAdapter;
 
-public class SummaryActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener{
+public class SummaryActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
 
     //First We Declare Titles And Icons For Our Navigation Drawer List View
     //This Icons And Titles Are holded in an Array as you can see
 
-    String TITLES[] = {"Summary","Spent","Income"};
-    int ICONS[] = {R.drawable.ic_menu_manage,R.drawable.ic_menu_gallery,R.drawable.ic_menu_send};
+    String TITLES[] = {"Summary", "Spent", "Income"};
+    int ICONS[] = {R.drawable.ic_menu_manage, R.drawable.ic_menu_gallery, R.drawable.ic_menu_send};
 
     //Similarly we Create a String Resource for the name and email in the header view
     //And we also create a int resource for profile picture in the header view
 
     String NAME = "Xxxxx Xxx ";
     String EMAIL = "xxxxxxx@xxxx.com";
-    int PROFILE = R.mipmap.aka;
-
+    String FBProfilePicURL="https://graph.facebook.com/" + R.string.facebook_app_id + "/picture?type=large";
     private Toolbar toolbar;                              // Declaring the Toolbar Object
 
     RecyclerView mRecyclerView;                           // Declaring RecyclerView
@@ -46,16 +45,14 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
     ActionBarDrawerToggle mDrawerToggle;                  // Declaring Action Bar Drawer Toggle
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if(getSupportActionBar() != null)
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -67,13 +64,11 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
         });
 
 
-
-
         mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView); // Assigning the RecyclerView Object to the xml View
 
         mRecyclerView.setHasFixedSize(true);                            // Letting the system know that the list objects are of fixed size
 
-        mAdapter = new MyAdapter(TITLES,ICONS,NAME,EMAIL,PROFILE,getApplicationContext());       // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
+        mAdapter = new MyAdapter(TITLES, ICONS, NAME, EMAIL, FBProfilePicURL, getApplicationContext());       // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
         // And passing the titles,icons,header view name, header view email,
         // and header view profile picture
 
@@ -82,7 +77,8 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
 
         final GestureDetector mGestureDetector = new GestureDetector(SummaryActivity.this, new GestureDetector.SimpleOnGestureListener() {
 
-            @Override public boolean onSingleTapUp(MotionEvent e) {
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
                 return true;
             }
 
@@ -125,7 +121,7 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
 
 
         Drawer = (DrawerLayout) findViewById(R.id.drawer_layout);        // Drawer object Assigned to the view
-        mDrawerToggle = new ActionBarDrawerToggle(this,Drawer,toolbar,R.string.drawer_open,R.string.drawer_close){
+        mDrawerToggle = new ActionBarDrawerToggle(this, Drawer, toolbar, R.string.drawer_open, R.string.drawer_close) {
 
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -139,7 +135,6 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
                 super.onDrawerClosed(drawerView);
                 // Code here will execute once drawer is closed
             }
-
 
 
         }; // Drawer Toggle Object Made
@@ -167,11 +162,11 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_add_trans) {
-            Intent intent = new Intent(getApplicationContext(),TransactionActivity.class);
+            Intent intent = new Intent(getApplicationContext(), TransactionActivity.class);
             startActivityForResult(intent, 12345, null);
             return true;
         } else if (id == R.id.action_add_cat) {
-            Intent intent = new Intent(getApplicationContext(),CategoryActivity.class);
+            Intent intent = new Intent(getApplicationContext(), CategoryActivity.class);
             startActivityForResult(intent, 12346, null);
             return true;
         }
@@ -193,7 +188,7 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
     }
 
     public void onTouchDrawer(final int position) {
-        if (position>=4) return;
+        if (position >= 4) return;
 
         switch (position) {
             case 1:
@@ -209,19 +204,17 @@ public class SummaryActivity extends AppCompatActivity implements FragmentDrawer
                 return;
         }
     }
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // check if the request code is same as what is passed  here it is 2
-        if(requestCode==12345)
-        {
-            View view =this.findViewById(android.R.id.content);
+        if (requestCode == 12345) {
+            View view = this.findViewById(android.R.id.content);
             Snackbar.make(view, "Transaction Created", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
-        } else if(requestCode==12346)
-        {
-            View view =this.findViewById(android.R.id.content);
+        } else if (requestCode == 12346) {
+            View view = this.findViewById(android.R.id.content);
             Snackbar.make(view, "Category Created", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }

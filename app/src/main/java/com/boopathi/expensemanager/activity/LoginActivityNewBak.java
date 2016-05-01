@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.boopathi.expensemanager.R;
@@ -24,7 +25,7 @@ import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONObject;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivityNewBak extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
@@ -44,9 +45,9 @@ public class LoginActivity extends AppCompatActivity {
         AppEventsLogger.activateApp(this);
         // Initialize layout button
         setContentView(R.layout.activity_login_social);
-        if (PrefUtils.getCurrentUser(LoginActivity.this) != null) {
+        if (PrefUtils.getCurrentUser(LoginActivityNewBak.this) != null) {
 
-            Intent homeIntent = new Intent(LoginActivity.this, SummaryActivity.class);
+            Intent homeIntent = new Intent(LoginActivityNewBak.this, SummaryActivity.class);
             startActivity(homeIntent);
             finish();
         }
@@ -56,12 +57,36 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+
         callbackManager=CallbackManager.Factory.create();
 
         loginButton= (LoginButton)findViewById(R.id.fb_login_button);
 
         loginButton.setReadPermissions("public_profile", "email","user_friends");
-        loginButton.registerCallback(callbackManager, mCallBack);
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
+
+                loginButton.performClick();
+
+                loginButton.setPressed(true);
+
+                loginButton.invalidate();
+
+                loginButton.registerCallback(callbackManager, mCallBack);
+
+                loginButton.setPressed(false);
+
+                loginButton.invalidate();
+
+            }
+        });
     }
 
     @Override
@@ -75,9 +100,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onSuccess(LoginResult loginResult) {
 
-
-
-
+            progressDialog.dismiss();
 
             // App code
             GraphRequest request = GraphRequest.newMeRequest(
@@ -95,27 +118,24 @@ public class LoginActivity extends AppCompatActivity {
                                 user.email = object.getString("email").toString();
                                 user.name = object.getString("name").toString();
                                 user.gender = object.getString("gender").toString();
-                                PrefUtils.setCurrentUser(user,LoginActivity.this);
+                                PrefUtils.setCurrentUser(user,LoginActivityNewBak.this);
 
                             }catch (Exception e){
                                 e.printStackTrace();
                             }
-
-
+                            Toast.makeText(LoginActivityNewBak.this,"welcome "+user.name, Toast.LENGTH_LONG).show();
+                            Intent intent=new Intent(LoginActivityNewBak.this,SummaryActivity.class);
+                            startActivity(intent);
+                            finish();
 
                         }
 
                     });
 
             Bundle parameters = new Bundle();
-            parameters.putString("fields", "id,name,email,gender");
+            parameters.putString("fields", "id,name,email,gender, birthday");
             request.setParameters(parameters);
             request.executeAsync();
-            Toast.makeText(LoginActivity.this,"welcome "+user.name, Toast.LENGTH_LONG).show();
-            Intent homeIntent = new Intent(LoginActivity.this, SummaryActivity.class);
-            homeIntent.putExtras(parameters);
-            startActivity(homeIntent);
-            finish();
         }
 
         @Override
